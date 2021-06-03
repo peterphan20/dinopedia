@@ -46,6 +46,7 @@ const StyledButtonContainer = styled.div`
 
 const StyledButton = styled.button`
 	background-color: #60a5fa;
+	color: #111827;
 	font-size: 1em;
 	border: none;
 	border-radius: 5px;

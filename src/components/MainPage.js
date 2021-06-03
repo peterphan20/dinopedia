@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import DinoCard from "./DinoCard";
+import { getAllDinos } from "../helpers/crudMembers";
+
 const MainPage = () => {
+	const [term, setTerm] = useState("");
+	const [results, setResults] = useState([]);
+	console.log(results);
+	useEffect(() => {
+		getAllDinos(setResults);
+	}, []);
+
 	return (
 		<StyledMainPageContainer>
 			<StyledListContainer>
 				<StyledSearchbar>
-					<input type="text" className="dino-search" placeholder="Search" />
+					<input
+						type="text"
+						className="dino-search"
+						placeholder="Search"
+						term={term}
+						onChange={(e) => setTerm(e.target.value)}
+					/>
 				</StyledSearchbar>
-				<StyledCardContainer>
-					<StyledDinoCard>hello</StyledDinoCard>
-					<StyledDinoCard>there</StyledDinoCard>
-					<StyledDinoCard>butt</StyledDinoCard>
-					<StyledDinoCard>butt</StyledDinoCard>
-					<StyledDinoCard>butt</StyledDinoCard>
-					<StyledDinoCard>butt</StyledDinoCard>
-					<StyledDinoCard>butt</StyledDinoCard>
-				</StyledCardContainer>
+				<DinoCard results={results} term={term} />
 			</StyledListContainer>
 		</StyledMainPageContainer>
 	);
@@ -41,6 +49,7 @@ const StyledSearchbar = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 2.5em;
 	width: 100%;
 
 	input {
@@ -53,17 +62,4 @@ const StyledSearchbar = styled.div`
 		padding: 10px 20px;
 		width: 20em;
 	}
-`;
-
-const StyledCardContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	margin: 0 auto;
-`;
-
-const StyledDinoCard = styled.div`
-	background-color: #1d4ed8;
-	width: 350px;
-	height: 200px;
-	border: 1px solid black;
 `;
