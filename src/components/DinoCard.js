@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const DinoCard = ({ results, term }) => {
+const DinoCard = ({ results, term, handleDeleteDino }) => {
 	const renderedListed = results
 		.sort((a, b) => (a.name < b.name ? -1 : 1))
 		.filter((card) => {
@@ -13,6 +14,7 @@ const DinoCard = ({ results, term }) => {
 			) {
 				return true;
 			}
+			return false;
 		})
 		.map((card) => {
 			return (
@@ -22,7 +24,14 @@ const DinoCard = ({ results, term }) => {
 						<h1>
 							{card.gender}
 							{/* <i className="fas fa-mars"></i> */}
+							{/* <i className="fas fa-venus"></i> */}
 						</h1>
+						<div>
+							<Link to="/edit-dino">
+								<button>Edit</button>
+							</Link>
+							<button onClick={handleDeleteDino}>Delete</button>
+						</div>
 					</CardHeader>
 					<h2>{card.species}</h2>
 					<StyledCardDescription>{card.description}</StyledCardDescription>
@@ -51,7 +60,7 @@ const StyledDinoCard = styled.div`
 	border: 1px solid #111827;
 	padding: 1em 1.5em;
 	width: 350px;
-	height: 230px;
+	height: 200px;
 
 	h2 {
 		font-size: 1.3em;

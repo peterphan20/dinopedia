@@ -2,15 +2,26 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import DinoCard from "./DinoCard";
-import { getAllDinos } from "../helpers/crudMembers";
+import { getAllDinos, deleteDino } from "../helpers/crudMembers";
 
 const MainPage = () => {
 	const [term, setTerm] = useState("");
 	const [results, setResults] = useState([]);
 	console.log(results);
+
 	useEffect(() => {
 		getAllDinos(setResults);
 	}, []);
+
+	const handleDeleteDino = (dinoID) => {
+		console.log(dinoID);
+		const idArr = [...results].filter((dino) => {
+			console.log(dino.id);
+			return Number(dino.id) !== Number(dinoID);
+		});
+		setResults(idArr);
+		deleteDino(dinoID);
+	};
 
 	return (
 		<StyledMainPageContainer>
@@ -24,7 +35,12 @@ const MainPage = () => {
 						onChange={(e) => setTerm(e.target.value)}
 					/>
 				</StyledSearchbar>
-				<DinoCard results={results} term={term} />
+				<DinoCard
+					results={results}
+					term={term}
+					setResults={setResults}
+					handleDeleteDino={handleDeleteDino}
+				/>
 			</StyledListContainer>
 		</StyledMainPageContainer>
 	);

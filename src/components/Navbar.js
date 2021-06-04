@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Navbar = () => {
@@ -6,8 +7,12 @@ const Navbar = () => {
 		<StyledNavbar>
 			<StyledLogo>Dinopedia 🦖</StyledLogo>
 			<StyledButtonContainer>
-				<StyledButton>Home</StyledButton>
-				<StyledButton>Add Dino</StyledButton>
+				<Link to="/">
+					<StyledButton>Home</StyledButton>
+				</Link>
+				<Link to="/create-dino">
+					<StyledButton>Add Dino</StyledButton>
+				</Link>
 			</StyledButtonContainer>
 		</StyledNavbar>
 	);
