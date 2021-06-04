@@ -4,23 +4,24 @@ import styled from "styled-components";
 import DinoCard from "./DinoCard";
 import { getAllDinos, deleteDino } from "../helpers/crudMembers";
 
-const MainPage = () => {
+const MainPage = ({ setCurrentSelectedMember }) => {
 	const [term, setTerm] = useState("");
 	const [results, setResults] = useState([]);
-	console.log(results);
 
 	useEffect(() => {
 		getAllDinos(setResults);
 	}, []);
 
 	const handleDeleteDino = (dinoID) => {
-		console.log(dinoID);
 		const idArr = [...results].filter((dino) => {
-			console.log(dino.id);
-			return Number(dino.id) !== Number(dinoID);
+			return dino._id !== dinoID;
 		});
 		setResults(idArr);
 		deleteDino(dinoID);
+	};
+
+	const handleEditDino = (dinoID) => {
+		setCurrentSelectedMember({ dinoID });
 	};
 
 	return (
@@ -40,6 +41,7 @@ const MainPage = () => {
 					term={term}
 					setResults={setResults}
 					handleDeleteDino={handleDeleteDino}
+					handleEditDino={handleEditDino}
 				/>
 			</StyledListContainer>
 		</StyledMainPageContainer>

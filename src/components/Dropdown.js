@@ -12,18 +12,38 @@ const Dropdown = ({ options, selected, onSelectedChange, label }) => {
 	return (
 		<React.Fragment>
 			<StyledDropdownLabel htmlFor={label}>{label}</StyledDropdownLabel>
-			<StyledSelect
+			<StyledDropdownSelect
 				key={options.value}
 				value={selected}
 				onChange={(e) => onSelectedChange(e.target.value)}
 			>
 				{renderedDropdown}
-			</StyledSelect>
+			</StyledDropdownSelect>
 		</React.Fragment>
 	);
 };
 
 export default Dropdown;
 
-const StyledDropdownLabel = styled.label``;
-const StyledSelect = styled.select``;
+const StyledDropdownLabel = styled.label`
+	display: block;
+	color: #121212;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 10px 0px;
+`;
+
+const StyledDropdownSelect = styled.select`
+	background-color: #dedfe3;
+	color: #111827;
+	font-size: 1em;
+	display: block;
+	border: none;
+	border-radius: 3px;
+	padding: 10px;
+	width: 100%;
+
+	option {
+		color: #121212;
+	}
+`;

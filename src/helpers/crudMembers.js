@@ -23,7 +23,7 @@ export const deleteDino = async (dinoID) => {
 	return data;
 };
 
-export const editDino = async (dinoID, dinoObj) => {
+export const putDino = async (dinoID, dinoObj) => {
 	const res = await fetch(`https://concord-dinopedia.herokuapp.com/api/${dinoID}`, {
 		method: "PUT",
 		body: JSON.stringify(dinoObj),

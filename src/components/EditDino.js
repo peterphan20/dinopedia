@@ -3,74 +3,71 @@ import styled from "styled-components";
 
 import Dropdown from "./Dropdown";
 
-import { createDino } from "../helpers/crudMembers";
+import { putDino } from "../helpers/crudMembers";
 import { dinoGender } from "../helpers/dinoDescription";
 
-const DinoCreation = () => {
-	const [name, setName] = useState("");
-	const [species, setSpecies] = useState("");
-	const [gender, setGender] = useState(dinoGender[0]);
-	const [description, setDescription] = useState("");
+const EditDino = ({ currentSelectedMember }) => {
+	const { dinoID } = currentSelectedMember;
 
-	const onAddSubmit = async () => {
+	const [editName, setEditName] = useState("");
+	const [editSpecies, setEditSpecies] = useState("");
+	const [editGender, setEditGender] = useState(dinoGender[0]);
+	const [editDescription, setEditDescription] = useState("");
+
+	const onEditSubmit = async () => {
+    // This is the body for my PUT request
 		const dinoObj = {
-			name,
-			species,
-			gender,
-			description,
+			editName,
+			editSpecies,
+			editGender,
+			editDescription,
 		};
-		const response = await createDino(dinoObj);
-		if (response) {
-			setName("");
-			setSpecies("");
-			setGender(dinoGender[0]);
-			setDescription("");
-		}
+		putDino(dinoID, dinoObj);
 	};
 
 	return (
-		<StyledCreationContainer>
-			<StyledCreationForm>
-				<h1>Create Dinosaur</h1>
-				<StyledLabel htmlFor="dinoName">Name</StyledLabel>
+		<StyledEditContainer>
+			<StyledEditForm>
+				<h1>Edit Dinosaur</h1>
+				<StyledLabel htmlFor="editDinoName">Name</StyledLabel>
 				<StyledTextInputField
 					type="text"
-					id="dinoName"
+					id="editDinoName"
 					placeholder="Name"
-					value={name}
-					onChange={(e) => setName(e.target.value)}
+					value={editName}
+					onChange={(e) => setEditName(e.target.value)}
 				/>
-				<StyledLabel htmlFor="dinoSpecies">Dinosaur Species</StyledLabel>
+				<StyledLabel htmlFor="editDinoSpecies">Species</StyledLabel>
 				<StyledTextInputField
 					type="text"
-					id="dinoSpecies"
+					id="editDinoSpecies"
 					placeholder="Species"
-					value={species}
-					onChange={(e) => setSpecies(e.target.value)}
+					value={editSpecies}
+					onChange={(e) => setEditSpecies(e.target.value)}
 				/>
 				<Dropdown
-					selected={gender}
+					selected={editGender}
 					options={dinoGender}
-					onSelectedChange={setGender}
-					label="Gender"
+					onSelectedChange={(e) => setEditGender(e.target.value)}
+					StyledLabel="Gender"
 				/>
-				<StyledLabel htmlFor="dinoDescription">Description</StyledLabel>
-				<StyledDinoDescription
+				<StyledLabel htmlFor="editDinoDescription">Description</StyledLabel>
+				<StyledEditDescription
 					type="text"
-					id="dinoDescription"
+					id="editDinoDescription"
 					placeholder="200 character limit"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
+					value={editDescription}
+					onChange={(e) => setEditDescription(e.target.value)}
 				/>
-				<StyledSubmitButton onClick={onAddSubmit}>Submit</StyledSubmitButton>
-			</StyledCreationForm>
-		</StyledCreationContainer>
+				<StyledSubmitButton onClick={onEditSubmit}>Edit Dinosaur</StyledSubmitButton>
+			</StyledEditForm>
+		</StyledEditContainer>
 	);
 };
 
-export default DinoCreation;
+export default EditDino;
 
-const StyledCreationContainer = styled.div`
+const StyledEditContainer = styled.div`
 	background-color: #e5e7eb;
 	display: flex;
 	flex-direction: column;
@@ -81,7 +78,7 @@ const StyledCreationContainer = styled.div`
 	width: 100%;
 `;
 
-const StyledCreationForm = styled.div`
+const StyledEditForm = styled.div`
 	background-color: #f3f4f6;
 	display: flex;
 	flex-direction: column;
@@ -116,7 +113,7 @@ const StyledTextInputField = styled.input`
 	}
 `;
 
-const StyledDinoDescription = styled.textarea`
+const StyledEditDescription = styled.textarea`
 	background-color: #dedfe3;
 	color: #111827;
 	border: none;
